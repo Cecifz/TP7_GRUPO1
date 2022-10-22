@@ -61,6 +61,11 @@ public class SeguroDaoImpl implements SeguroDao
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean isUpdateExitoso = false;
 		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
 				statement = conexion.prepareStatement(update);
 				statement.setString(1, seguro_a_actualizar.getDescripcion());
 				statement.setInt(2, seguro_a_actualizar.getIdTipo());
@@ -89,6 +94,11 @@ public class SeguroDaoImpl implements SeguroDao
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean isdeleteExitoso = false;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		try 
 		{
 			statement = conexion.prepareStatement(delete);
@@ -106,18 +116,19 @@ public class SeguroDaoImpl implements SeguroDao
 		return isdeleteExitoso;
 	}
 
-	@Override
-	public List<Seguro> readAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	/*public List<Seguro> readAll()
+		
+	public List<Seguro> readAll()
 	{
 		PreparedStatement statement;
 		ResultSet resultSet; //Guarda el resultado de la query
 		ArrayList<entidad.Seguro> seguros = new ArrayList<Seguro>();
 		Conexion conexion = Conexion.getConexion();
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		try 
 		{
 			statement = conexion.getSQLConexion().prepareStatement(readall);
@@ -141,65 +152,6 @@ public class SeguroDaoImpl implements SeguroDao
 		Double costoContratacion = Double.valueOf(resultSet.getString("costoContratacion"));
 		Double costoAsegurado = Double.valueOf(resultSet.getString("costoAsegurado"));
 		return new Seguro(descripcion, idTipo,costoContratacion,costoAsegurado);
-	}*/
-	/*
-	
-	public Seguro readOne(int id)
-	{
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		Seguro usuario = new Seguro();
-		Connection con = null;
-		try{
-			con = DriverManager.getConnection(host + dbName, user, pass);
-			PreparedStatement miSentencia = con.prepareStatement("Select * from usuario where Id = ?");
-			miSentencia.setInt(1, id); //Cargo el ID recibido
-			ResultSet resultado = miSentencia.executeQuery();
-			resultado.next();
-			
-			usuario.setId(resultado.getInt(1));
-		    usuario.setNombre(resultado.getString(2));
-		    usuario.setApellido(resultado.getString(3));
-		    
-		    con.close();
-		}
-		catch(Exception e)
-		{
-			System.out.println("Conexion fallida");
-		}
-		finally
-		{
-		}
-		return usuario;
 	}
-	
-	
-	 public void procedimientoInsertarUsuario(Usuario usuario)
-	   {
-		 try {
-				Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		   Connection conn = null;
-	       try {
-	    	    conn = DriverManager.getConnection(host + dbName, user, pass);
-	            CallableStatement proc = conn.prepareCall(" CALL crearUsuario(?,?) ");
-	            proc.setString("Unombre", usuario.getNombre());//Tipo String
-	            proc.setString("Uapellido", usuario.getApellido());
-	            proc.execute();            
-	        } 
-	       catch (Exception e) {                  
-	            System.out.println(e);
-	       }
-	   }
-	*/
-	
 
 }
