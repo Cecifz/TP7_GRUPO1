@@ -19,7 +19,6 @@ public class SeguroDaoImpl implements SeguroDao
 	private static final String delete = "DELETE FROM seguros WHERE idSeguro = ?";
 	private static final String readall = "SELECT * FROM seguros";
 	private static final String update = "UPDATE seguros set descripcion = ?, idTipo = ?, costoContratacion = ?, costoAsegurado = ? Where idSeguro = ?";
-	private static final String readOne = "SELECT * FROM seguros Where idSeguro = ?";
 		
 	public boolean insert(Seguro seguro_a_agregar)
 	{

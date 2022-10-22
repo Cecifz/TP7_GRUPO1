@@ -21,19 +21,7 @@
 
 
 <!-- Declaración -->
-
-<!-- Scriptlet -->
-<%
-/*
-ACA SE PUEDE PROBAR QUE FUNCIONE LA DB
-Seguro seg = new Seguro(3,"holiwis",2,54.65,21.25);
-SeguroNegocioImpl sn =new SeguroNegocioImpl();
-
-if(sn.insert(seg))
-{
-System.out.print("holis");	
-}*/
-%>
+<%! int idSeguro = Seguro.proximoNroID(); %>
 
 
 <a href="Inicio.jsp"> Inicio </a>
@@ -43,7 +31,7 @@ System.out.print("holis");
 
 <form method="get" action="servletSeguro">
  <label for="txtIdSeguro">Id Seguro:</label><br>
- <input type="text" name="txtIdSeguro"><br>
+ <input type="text" name="txtIdSeguro" disabled value=<%=idSeguro %>> <br>
  <label for="txtDescripcion">Descrición:</label><br>
  <input type="text" name="txtDescripcion"><br>
  <label for="txtTipoSeguro">Tipo de Seguro:</label><br>

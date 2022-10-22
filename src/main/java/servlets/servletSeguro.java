@@ -36,7 +36,6 @@ public class servletSeguro extends HttpServlet {
 		boolean agregado = false;
 		if(request.getParameter("btnAgregar") != null) 	{
 			Seguro seguro  =  new Seguro();
-			seguro.setIdSeguro(Integer.parseInt(request.getParameter("txtIdSeguro")));
 			seguro.setDescripcion(request.getParameter("txtDescripcion"));
 			seguro.setIdTipo(Integer.parseInt(request.getParameter("txtTipoSeguro")));
 			seguro.setCostoContratacion(Double.parseDouble(request.getParameter("txtCostoContratacion")));
@@ -48,7 +47,7 @@ public class servletSeguro extends HttpServlet {
 			request.setAttribute("filas", agregado);
 			RequestDispatcher rd = request.getRequestDispatcher("/AgregarSeguro.jsp");   
 	        rd.forward(request, response);    
-			
+	       
 		}
 		
 		
