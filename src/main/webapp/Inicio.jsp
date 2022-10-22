@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Inicio</title>
 </head>
 <body>
-<a href="#"> Inicio </a>
-<a href="#"> Agregar seguro </a>
+<a href="Inicio.jsp"> Inicio </a>
+<a href="AgregarSeguro.jsp"> Agregar seguro </a>
 <a href="#"> Listar Seguros </a>
 <h1>Soy la página de inicio</h1>
 

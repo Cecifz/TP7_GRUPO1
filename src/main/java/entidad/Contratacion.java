@@ -1,4 +1,4 @@
-package dominio;
+package entidad;
 
 import java.math.BigDecimal;
 

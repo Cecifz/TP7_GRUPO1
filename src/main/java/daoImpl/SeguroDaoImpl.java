@@ -1,14 +1,17 @@
 package daoImpl;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import dao.SeguroDao;
 import entidad.Seguro;
+import java.sql.Statement;
+
 
 public class SeguroDaoImpl implements SeguroDao
 {
@@ -16,12 +19,19 @@ public class SeguroDaoImpl implements SeguroDao
 	private static final String delete = "DELETE FROM seguros WHERE idSeguro = ?";
 	private static final String readall = "SELECT * FROM seguros";
 	private static final String update = "UPDATE seguros set descripcion = ?, idTipo = ?, costoContratacion = ?, costoAsegurado = ? Where idSeguro = ?";
+	private static final String readOne = "SELECT * FROM seguros Where idSeguro = ?";
 		
 	public boolean insert(Seguro seguro_a_agregar)
 	{
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean isInsertExitoso = false;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		try
 		{
 			statement = conexion.prepareStatement(insert);
@@ -47,7 +57,7 @@ public class SeguroDaoImpl implements SeguroDao
 	
 	public boolean update(Seguro seguro_a_actualizar) {
 		
-		System.out.println(seguro_a_actualizar.toString2());
+		System.out.println(seguro_a_actualizar.toString());
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean isUpdateExitoso = false;
@@ -96,12 +106,18 @@ public class SeguroDaoImpl implements SeguroDao
 		}
 		return isdeleteExitoso;
 	}
+
+	@Override
+	public List<Seguro> readAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
-	public List<Seguro> readAll()
+	/*public List<Seguro> readAll()
 	{
 		PreparedStatement statement;
 		ResultSet resultSet; //Guarda el resultado de la query
-		ArrayList<Seguro> seguros = new ArrayList<Seguro>();
+		ArrayList<entidad.Seguro> seguros = new ArrayList<Seguro>();
 		Conexion conexion = Conexion.getConexion();
 		try 
 		{
@@ -121,11 +137,70 @@ public class SeguroDaoImpl implements SeguroDao
 	
 	private Seguro getSeguro(ResultSet resultSet) throws SQLException
 	{
-		int idSeguro = Integer.parseInt(resultSet.getString("idSeguro"));
 		String descripcion = resultSet.getString("descripcion");
 		int idTipo = Integer.parseInt(resultSet.getString("idTipo"));
 		Double costoContratacion = Double.valueOf(resultSet.getString("costoContratacion"));
 		Double costoAsegurado = Double.valueOf(resultSet.getString("costoAsegurado"));
-		return new Seguro(idSeguro, descripcion, idTipo,costoContratacion,costoAsegurado);
+		return new Seguro(descripcion, idTipo,costoContratacion,costoAsegurado);
+	}*/
+	/*
+	
+	public Seguro readOne(int id)
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		Seguro usuario = new Seguro();
+		Connection con = null;
+		try{
+			con = DriverManager.getConnection(host + dbName, user, pass);
+			PreparedStatement miSentencia = con.prepareStatement("Select * from usuario where Id = ?");
+			miSentencia.setInt(1, id); //Cargo el ID recibido
+			ResultSet resultado = miSentencia.executeQuery();
+			resultado.next();
+			
+			usuario.setId(resultado.getInt(1));
+		    usuario.setNombre(resultado.getString(2));
+		    usuario.setApellido(resultado.getString(3));
+		    
+		    con.close();
+		}
+		catch(Exception e)
+		{
+			System.out.println("Conexion fallida");
+		}
+		finally
+		{
+		}
+		return usuario;
 	}
+	
+	
+	 public void procedimientoInsertarUsuario(Usuario usuario)
+	   {
+		 try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		   Connection conn = null;
+	       try {
+	    	    conn = DriverManager.getConnection(host + dbName, user, pass);
+	            CallableStatement proc = conn.prepareCall(" CALL crearUsuario(?,?) ");
+	            proc.setString("Unombre", usuario.getNombre());//Tipo String
+	            proc.setString("Uapellido", usuario.getApellido());
+	            proc.execute();            
+	        } 
+	       catch (Exception e) {                  
+	            System.out.println(e);
+	       }
+	   }
+	*/
+	
+
 }

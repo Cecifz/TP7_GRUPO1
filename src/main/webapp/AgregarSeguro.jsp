@@ -15,7 +15,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Agregar Seguro</title>
 </head>
 <body>
 
@@ -34,12 +34,14 @@ if(sn.insert(seg))
 System.out.print("holis");	
 }*/
 %>
-<a href="#"> Inicio </a>
+
+
+<a href="Inicio.jsp"> Inicio </a>
 <a href="#"> Agregar seguro </a>
 <a href="#"> Listar Seguros </a>
 <h1>Agregar Seguros</h1>
 
-<form method="get" action="Agregar.jsp">
+<form method="get" action="servletSeguro">
  <label for="txtIdSeguro">Id Seguro:</label><br>
  <input type="text" name="txtIdSeguro"><br>
  <label for="txtDescripcion">Descrición:</label><br>
@@ -50,8 +52,17 @@ System.out.print("holis");
  <input type="text" name="txtCostoContratacion"><br>
  <label for="txtCostoAsegurado">Costo máximo asegurado: </label><br>
  <input type="text" name="txtCostoAsegurado"><br><br>
- <input type="submit" value="Agregar">
+ <input type="submit" value="Agregar" name="btnAgregar">
 </form>
+
+<%
+    boolean agregado = false;
+	if(request.getAttribute("cantFilas")!=null)
+		agregado= (boolean)request.getAttribute("cantFilas");
+	if(agregado == true) { 
+%>
+<p>Seguro agregado con éxito</p>
+<% }  %>
 
 <p></p>
 <p></p>

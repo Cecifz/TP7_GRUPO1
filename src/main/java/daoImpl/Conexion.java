@@ -12,6 +12,11 @@ public class Conexion {
     public static Conexion instancia;
     private Connection connection;
     private Conexion() {
+    	try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
         try {
             Class.forName("com.mysql.jdbc.Driver");
             this.connection = DriverManager.getConnection(host + dbName, user, pass);
@@ -22,6 +27,7 @@ public class Conexion {
     }
 
     public static Conexion getConexion() {
+    	
         if(instancia == null) {
             instancia = new Conexion();
         }
