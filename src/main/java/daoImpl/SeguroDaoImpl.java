@@ -1,0 +1,131 @@
+package daoImpl;
+
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import dao.SeguroDao;
+import entidad.Seguro;
+
+public class SeguroDaoImpl implements SeguroDao
+{
+	private static final String insert = "INSERT INTO seguros(idSeguro, descripcion, idTipo, costoContratacion, costoAsegurado) VALUES(?, ?, ?, ?, ?)";
+	private static final String delete = "DELETE FROM seguros WHERE idSeguro = ?";
+	private static final String readall = "SELECT * FROM seguros";
+	private static final String update = "UPDATE seguros set descripcion = ?, idTipo = ?, costoContratacion = ?, costoAsegurado = ? Where idSeguro = ?";
+		
+	public boolean insert(Seguro seguro_a_agregar)
+	{
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isInsertExitoso = false;
+		try
+		{
+			statement = conexion.prepareStatement(insert);
+			statement.setInt(1,seguro_a_agregar.getIdSeguro());
+			statement.setString(2, seguro_a_agregar.getDescripcion());
+			statement.setInt(3, seguro_a_agregar.getIdTipo());
+			statement.setDouble(4,seguro_a_agregar.getCostoContratacion());
+			statement.setDouble(5,seguro_a_agregar.getCostoAsegurado());
+			if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				isInsertExitoso = true;
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+			
+		}
+		
+		return isInsertExitoso;
+	}
+	
+	public boolean update(Seguro seguro_a_actualizar) {
+		
+		System.out.println(seguro_a_actualizar.toString2());
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isUpdateExitoso = false;
+		try {
+				statement = conexion.prepareStatement(update);
+				statement.setString(1, seguro_a_actualizar.getDescripcion());
+				statement.setInt(2, seguro_a_actualizar.getIdTipo());
+				statement.setDouble(3, seguro_a_actualizar.getCostoContratacion());
+				statement.setDouble(4, seguro_a_actualizar.getCostoAsegurado());
+				statement.setInt(5,seguro_a_actualizar.getIdSeguro());
+
+				
+			if(statement.executeUpdate() > 0){
+				conexion.commit();
+				isUpdateExitoso  = true;
+				}
+			} 
+		catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		
+		
+		return isUpdateExitoso;
+		}
+		
+	
+	
+	public boolean delete(Seguro seguro_a_eliminar)
+	{
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isdeleteExitoso = false;
+		try 
+		{
+			statement = conexion.prepareStatement(delete);
+			statement.setInt(1,seguro_a_eliminar.getIdSeguro());
+			if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				isdeleteExitoso = true;
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return isdeleteExitoso;
+	}
+	
+	public List<Seguro> readAll()
+	{
+		PreparedStatement statement;
+		ResultSet resultSet; //Guarda el resultado de la query
+		ArrayList<Seguro> seguros = new ArrayList<Seguro>();
+		Conexion conexion = Conexion.getConexion();
+		try 
+		{
+			statement = conexion.getSQLConexion().prepareStatement(readall);
+			resultSet = statement.executeQuery();
+			while(resultSet.next())
+			{
+				seguros.add(getSeguro(resultSet));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return seguros;
+	}
+	
+	private Seguro getSeguro(ResultSet resultSet) throws SQLException
+	{
+		int idSeguro = Integer.parseInt(resultSet.getString("idSeguro"));
+		String descripcion = resultSet.getString("descripcion");
+		int idTipo = Integer.parseInt(resultSet.getString("idTipo"));
+		Double costoContratacion = Double.valueOf(resultSet.getString("costoContratacion"));
+		Double costoAsegurado = Double.valueOf(resultSet.getString("costoAsegurado"));
+		return new Seguro(idSeguro, descripcion, idTipo,costoContratacion,costoAsegurado);
+	}
+}
