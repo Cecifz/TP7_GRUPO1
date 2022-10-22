@@ -9,7 +9,7 @@
 <body>
 <a href="Inicio.jsp"> Inicio </a>
 <a href="AgregarSeguro.jsp"> Agregar seguro </a>
-<a href="#"> Listar Seguros </a>
+<a href="ListarSeguros.jsp"> Listar Seguros </a>
 <h1>Soy la página de inicio</h1>
 
 </body>

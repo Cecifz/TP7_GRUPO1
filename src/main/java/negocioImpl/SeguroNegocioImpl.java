@@ -12,7 +12,6 @@ public class SeguroNegocioImpl implements SeguroNegocio{
 
 SeguroDao pdao = new SeguroDaoImpl();
 	
-	@Override
 	public boolean insert(Seguro seguro) {
 		
 		boolean estado=false;
@@ -24,7 +23,6 @@ SeguroDao pdao = new SeguroDaoImpl();
 		return estado;
 	}
 	
-	@Override
 	public boolean update(Seguro seguro) {
 		
 		boolean estado=false;
@@ -36,7 +34,6 @@ SeguroDao pdao = new SeguroDaoImpl();
 		return estado;
 	}
 	
-	@Override
 	public boolean delete(Seguro persona_a_eliminar) {
 		boolean estado=false;
 		try
@@ -52,7 +49,6 @@ SeguroDao pdao = new SeguroDaoImpl();
 		return estado;
 	}
 
-	@Override
 	public List<Seguro> readAll() {
 		
 		List<Seguro> lSeguro;

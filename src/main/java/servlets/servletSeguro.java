@@ -1,6 +1,8 @@
 package servlets;
 
+import java.awt.List;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,6 +51,17 @@ public class servletSeguro extends HttpServlet {
 	        rd.forward(request, response);    
 	       
 		}
+		
+		if(request.getParameter("listar") != null) {
+			Seguro seguro = new Seguro();
+			SeguroDao seguroDao = new SeguroDaoImpl();
+			ArrayList<Seguro> lista = (ArrayList<Seguro>)seguroDao.readAll();
+			
+			request.setAttribute("lista", lista);
+			RequestDispatcher rd = request.getRequestDispatcher("/ListarSeguros.jsp");
+			rd.forward(request, response);
+		}
+		
 		
 		
 	}
