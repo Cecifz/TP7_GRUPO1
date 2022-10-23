@@ -13,75 +13,60 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.SeguroDao;
 import daoImpl.SeguroDaoImpl;
+import daoImpl.TipoSeguroDaoImpl;
 import entidad.Seguro;
 
 /**
- * Servlet implementation class servletSeguro
+ * Servlet implementation class ServletAgregarSeguro
  */
-@WebServlet("/servletSeguro")
-public class servletSeguro extends HttpServlet {
+@WebServlet("/ServletAgregarSeguro")
+public class ServletAgregarSeguro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public servletSeguro() {
+    public ServletAgregarSeguro() {
         super();
-        
-        
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+		// TODO Auto-generated method stub
+		if(request.getParameter("getID") != null) 	{
+		SeguroDaoImpl seguroDao = new SeguroDaoImpl();
+		TipoSeguroDaoImpl Tpsd = new TipoSeguroDaoImpl();
+		request.setAttribute("id", seguroDao.readLast()+1);
+		request.setAttribute("TipoSeguros", Tpsd.readAll());
+		RequestDispatcher rd = request.getRequestDispatcher("/AgregarSeguro.jsp");
+		rd.forward(request, response);
+		}
 		
 		if(request.getParameter("btnAgregar") != null) 	{
 			boolean agregado = false;
 			int idSeguro= Integer.parseInt(request.getParameter("txtIdSeguro"));
 			String descripcion= request.getParameter("txtDescripcion");
-			int tipoSeguro=Integer.parseInt(request.getParameter("txtTipoSeguro"));
+			int tipoSeguro=Integer.parseInt(request.getParameter("TipoSeguro"));
 			double costoContratacion = Double.parseDouble(request.getParameter("txtCostoContratacion"));
 			double costoMaxAsegurado =Double.parseDouble(request.getParameter("txtCostoAsegurado"));
 			Seguro seguro  =  new Seguro(idSeguro,descripcion,tipoSeguro,costoContratacion,costoMaxAsegurado);
 			SeguroDao seguroDao = new SeguroDaoImpl();
 			agregado = seguroDao.insert(seguro);
 			//REQUESTDISPATCHER
-			request.setAttribute("filas", agregado);
-			RequestDispatcher rd = request.getRequestDispatcher("/AgregarSeguro.jsp");   
-	        rd.forward(request, response);    
+			response.sendRedirect("/TP7_GRUPO1/ServletAgregarSeguro?getID");
 	       
 		}
-		
-		if(request.getParameter("listar") != null) {
-			SeguroDaoImpl seguroDao = new SeguroDaoImpl();
-			ArrayList<Seguro> lista = (ArrayList<Seguro>)seguroDao.readAll();
-			request.setAttribute("lista", lista);
-			RequestDispatcher rd = request.getRequestDispatcher("/ListarSeguros.jsp");
-			rd.forward(request, response);
-		}
-		
-		
-
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//if(request.getParameter("readLast") != null) {
-		   response.setContentType("text/html");
-			PrintWriter out = response.getWriter();  
-			SeguroDaoImpl seguroDao = new SeguroDaoImpl();
-			int x = seguroDao.readLast();
-			out.print("Id Seguro"+x);
-			///request.setAttribute("last", x);
-			
-		//}
-	}
+		// TODO Auto-generated method stub
 
+	}
 
 }

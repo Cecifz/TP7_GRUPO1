@@ -66,6 +66,11 @@ SeguroDao pdao = new SeguroDaoImpl();
         }
 		return isNumber;
 	}
+
+	public int readLast() {
+		System.out.print(pdao.readLast());
+		return pdao.readLast();
+	}
 	
 
 }

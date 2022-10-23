@@ -2,23 +2,27 @@ package entidad;
 
 public class Seguro {
 	  
-	private static int nroId = 100;
-	private static int idSeguro = 100; 
+	private int idSeguro; 
 	private String descripcion; 
     private int idTipo; 
     private Double costoContratacion; 
     private Double costoAsegurado;
       
-    public static int proximoNroID() {
-        return idSeguro + 1;
-    }
+   /* public static int proximoNroID() {
+      //  return idSeguro + 1;
+    }*/
+    
+    
+    public void setIdSeguro(int x) {
+ 		 this.idSeguro = x;
+ 	}
     
     public int getIdSeguro() {
- 		return idSeguro;
+ 		return this.idSeguro;
  	}
 
  	public String getDescripcion() {
- 		return descripcion;
+ 		return this.descripcion;
  	}
 
  	public void setDescripcion(String descripcion) {
@@ -26,7 +30,7 @@ public class Seguro {
  	}
 
  	public int getIdTipo() {
- 		return idTipo;
+ 		return this.idTipo;
  	}
 
  	public void setIdTipo(int idTipo) {
@@ -49,14 +53,10 @@ public class Seguro {
  		this.costoAsegurado = costoAsegurado;
  	}
     public Seguro() {  
-    	nroId ++;
-    	this.idSeguro = nroId;
-
     }
 
-    public Seguro(String descripcion, int idTipo, Double costoContratacion, Double costoAsegurado) {
-        nroId ++;
-    	this.idSeguro = nroId;
+    public Seguro(int idSeguro,String descripcion, int idTipo, Double costoContratacion, Double costoAsegurado) {
+    	this.idSeguro = idSeguro;
         this.descripcion = descripcion;
         this.idTipo = idTipo;
         this.costoContratacion = costoContratacion;
