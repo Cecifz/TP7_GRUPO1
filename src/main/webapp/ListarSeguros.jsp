@@ -9,6 +9,9 @@
 <title>Listar Seguros</title>
 </head>
 <body>
+<a href="Inicio.jsp"> Inicio </a>
+<a href="/TP7_GRUPO1/ServletAgregarSeguro?getID"> Agregar seguro </a>
+<a href="ListarSeguros.jsp"> Listar Seguros </a>
 
 <% 
 	ArrayList<Seguro> listaSeguros= null;

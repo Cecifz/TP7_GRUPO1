@@ -23,8 +23,8 @@ ACA HAY QUE HACER UNA REQUEST Buscando el proximo ID
 
 
 <a href="Inicio.jsp"> Inicio </a>
-<a href="#"> Agregar seguro </a>
-<a href="#"> Listar Seguros </a>
+<a href="/TP7_GRUPO1/ServletAgregarSeguro?getID"> Agregar seguro </a>
+<a href="ListarSeguros.jsp"> Listar Seguros </a>
 <h1>Agregar Seguros</h1>
 
 
