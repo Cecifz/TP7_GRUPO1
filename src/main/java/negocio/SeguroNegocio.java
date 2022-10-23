@@ -9,5 +9,6 @@ public interface SeguroNegocio {
 	public boolean delete(Seguro seguro_a_eliminar);
 	public boolean update(Seguro seguro_a_modificar);
 	public List<Seguro> readAll();
+	public int readLast();
 	public boolean isNumber(String cadena);
 }
