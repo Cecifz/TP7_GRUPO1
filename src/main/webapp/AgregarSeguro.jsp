@@ -31,8 +31,8 @@ ACA HAY QUE HACER UNA REQUEST Buscando el proximo ID
  <form method="get" action="ServletAgregarSeguro">
  <input type="hidden" name="txtIdSeguro" value= ${id}>
  <label for="labelIdSeguro">Id Seguro: ${id}</label><br><br>
- <label for="txtDescripcion">Descrición:</label><br>
- <input type="text" name="txtDescripcion"><br><br>
+ <label for="txtDescripcion">Descripción:</label><br>
+ <input type="text" name="txtDescripcion" ><br><br>
 Tipo de seguros:<br>
 <select name="TipoSeguro">
    <!--  <option value="tech">Technology</option>--> 
@@ -52,6 +52,28 @@ Tipo de seguros:<br>
  <input type="text" name="txtCostoAsegurado"><br><br>
  <input type="submit" value="Agregar" name="btnAgregar">
 </form>
+<%
+	int filas = 0;
+	if(request.getAttribute("agregado")!= null)
+		filas = Integer.parseInt(request.getAttribute("agregado").toString());
+		
+%>
+<%
+	int error = 0;
+	if(request.getAttribute("error")!= null)
+		error = Integer.parseInt(request.getAttribute("error").toString());
+%>
+<%if(filas==1)
+	{
+%>	
+	Seguro agregado con éxito
+<%}%>
 
+<%if(error==1)
+	{
+%>	
+	Campos incorrectos, vuelva a ingresar los datos
+<%}%>
+<form method="post" action="ServletAgregarSeguro"></form>
 </body>
 </html>

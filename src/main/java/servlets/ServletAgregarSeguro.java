@@ -44,21 +44,44 @@ public class ServletAgregarSeguro extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/AgregarSeguro.jsp");
 		rd.forward(request, response);
 		}
-		
 		if(request.getParameter("btnAgregar") != null) 	{
 			boolean agregado = false;
 			int idSeguro= Integer.parseInt(request.getParameter("txtIdSeguro"));
 			String descripcion= request.getParameter("txtDescripcion");
-			int tipoSeguro=Integer.parseInt(request.getParameter("TipoSeguro"));
-			double costoContratacion = Double.parseDouble(request.getParameter("txtCostoContratacion"));
-			double costoMaxAsegurado =Double.parseDouble(request.getParameter("txtCostoAsegurado"));
-			Seguro seguro  =  new Seguro(idSeguro,descripcion,tipoSeguro,costoContratacion,costoMaxAsegurado);
-			SeguroDao seguroDao = new SeguroDaoImpl();
-			agregado = seguroDao.insert(seguro);
+			if (!isNumber(descripcion) && isNumber(request.getParameter("txtCostoContratacion"))&& isNumber(request.getParameter("txtCostoAsegurado")))
+			{
+				double costoContratacion = Double.parseDouble(request.getParameter("txtCostoContratacion"));
+				double costoMaxAsegurado =Double.parseDouble(request.getParameter("txtCostoAsegurado"));
+				int tipoSeguro=Integer.parseInt(request.getParameter("TipoSeguro"));
+				Seguro seguro  =  new Seguro(idSeguro,descripcion,tipoSeguro,costoContratacion,costoMaxAsegurado);
+				SeguroDao seguroDao = new SeguroDaoImpl();
+				agregado = seguroDao.insert(seguro);
+			}
+			else
+			{
+				request.setAttribute("error", 1);
+				RequestDispatcher rd = request.getRequestDispatcher("/AgregarSeguro.jsp");
+				rd.forward(request, response);
+			}
 			//REQUESTDISPATCHER
-			response.sendRedirect("/TP7_GRUPO1/ServletAgregarSeguro?getID");
-	       
+			if(agregado)
+			{
+				request.setAttribute("agregado", 1);
+				RequestDispatcher rd = request.getRequestDispatcher("/AgregarSeguro.jsp");
+				rd.forward(request, response);
+			}	       
 		}
+	}
+	
+	public boolean isNumber(String cadena) {
+		boolean isNumber = true;
+		
+		for (int i = 0; i < cadena.length(); i++) {
+            if (!Character.isDigit(cadena.charAt(i))) {
+                isNumber = false;
+            }
+        }
+		return isNumber;
 	}
 
 	/**
